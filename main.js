@@ -94,17 +94,19 @@ function animate() {
 
     if (cilinder.rotation.z >= 0.8 || cilinder.rotation.z <= -0.8)
       scaleRotation *= -1;
+
+    // Animação da banana
+    banana.position.x = Math.sin(time) * 4;
+    banana.position.y = Math.sin(time) * 1.8 - 1.5;
+    banana.position.z = Math.sin(time) * 3 - 3;
+    banana.rotation.z += 0.01;
+    banana.rotation.x += 0.05;
+    banana.rotation.y += 0.01;
+
+    time += 0.01;
   }
 
-  // Animação da banana
-  banana.position.x = Math.sin(time) * 4;
-  banana.position.y = Math.sin(time) * 1.8 - 1.5;
-  banana.position.z = Math.sin(time) * 3 - 3;
-  banana.rotation.z += 0.01;
-  banana.rotation.x += 0.05;
-  banana.rotation.y += 0.01;
 
-  time += 0.01;
 
   // Renderiza a cena com a câmera atual
   renderer.render(scene, currentCamera);
