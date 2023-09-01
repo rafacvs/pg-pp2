@@ -10,6 +10,41 @@
     </style>
   </head>
 
+  <script id="vertexShader" type="x-shader/x-vertex">
+    precision highp float;
+    uniform mat4 modelViewMatrix;
+    uniform mat4 projectionMatrix;
+    attribute vec3 position;
+    attribute vec2 uv;
+
+    varying vec2 vUv;
+
+    void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+    }
+  </script>
+
+  <script id="fragmentShader" type="x-shader/x-fragment">
+    precision highp float;
+    uniform float time;
+    varying vec2 vUv;
+
+    void main() {
+        float dist = length(vUv - 0.5);
+
+        float angle = atan(vUv.y - 0.9) + time;
+
+        vec3 color = vec3(
+            0.1 + 0.9 * sin(angle),   // Vermelho
+            0.4 + 0.1 * sin(angle + 15.0), // Verde
+            0.9 + 0.1 * sin(angle + 125.0)  // Azul
+        );
+
+        gl_FragColor = vec4(color, 1.0);
+    }
+  </script>
+
   <body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="main.js"></script>

@@ -45,7 +45,15 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
 const cilinderGeometry = new THREE.CylinderGeometry(0.3, 0.6, 1.5, 32);
-const cilinderMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+const cilinderMaterial = new THREE.RawShaderMaterial({
+  uniforms: {
+    time: { value: 1.0 },
+  },
+  vertexShader: document.getElementById("vertexShader").textContent,
+  fragmentShader: document.getElementById("fragmentShader").textContent,
+  side: THREE.DoubleSide,
+  transparent: true,
+});
 const cilinder = new THREE.Mesh(cilinderGeometry, cilinderMaterial);
 scene.add(cilinder);
 
