@@ -60,20 +60,24 @@ scene.add(cilinder);
 // animate variables
 let scaleDirection = 1;
 let scaleRotation = 1;
+let showAnimation = true;
 
 function animate() {
   requestAnimationFrame(animate);
 
-  // cilinder animations
-  cilinder.rotation.z += 0.01 * scaleRotation;
-  cilinder.scale.x += 0.01 * scaleDirection;
-  cilinder.scale.y += 0.01 * scaleDirection;
-  cilinder.scale.z -= 0.02 * scaleDirection;
+  if (showAnimation) {
+    // cilinder animations
+    cilinder.rotation.z += 0.01 * scaleRotation;
+    cilinder.scale.x += 0.01 * scaleDirection;
+    cilinder.scale.y += 0.01 * scaleDirection;
+    cilinder.scale.z -= 0.02 * scaleDirection;
 
-  if (cilinder.scale.x >= 3.5 || cilinder.scale.x <= 0.5) scaleDirection *= -1;
+    if (cilinder.scale.x >= 3.5 || cilinder.scale.x <= 0.5)
+      scaleDirection *= -1;
 
-  if (cilinder.rotation.z >= 0.8 || cilinder.rotation.z <= -0.8)
-    scaleRotation *= -1;
+    if (cilinder.rotation.z >= 0.8 || cilinder.rotation.z <= -0.8)
+      scaleRotation *= -1;
+  }
 
   renderer.render(scene, currentCamera);
 }
@@ -83,4 +87,5 @@ animate();
 window.addEventListener("keydown", (e) => {
   if (["1", "2", "3"].includes(e.key))
     currentCamera = cameras[Number(e.key) - 1];
+  if ("Space" === e.code) showAnimation = !showAnimation;
 });
