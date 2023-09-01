@@ -1,9 +1,19 @@
-# Projeto Parcial 2 - Pg
-- Rafael Campos
-- Rafael Penido
+# Projeto Parcial 2 - Processamento gráfico
 
-Para rodar o projeto, garanta que possui o Node.JS instalado. Depois, clone o repositorio e digite
+
+
+Para rodar o projeto localmente, primeiro instale o NodeJS.
+
+Após ter o NodeJS instalado, clone o repositório e rode o seguinte comando na pasta raíz do projeto:
 ```
 npx serve .
 ```
-no diretório criado.
+## Controles
+
+| Tecla     | Ação                    |
+| --------- | ----------------------- |
+| Space     | Pausar/Resumir animação |
+| 1         | Utilizar câmera 1       |
+| 2         | Utilizar câmera 2       |
+| 3         | Utilizar câmera 3       |
+
