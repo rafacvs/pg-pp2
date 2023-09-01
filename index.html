@@ -1,52 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>Vai girando</title>
-    <style>
-      body {
-        margin: 0;
-      }
-    </style>
-  </head>
-
-  <script id="vertexShader" type="x-shader/x-vertex">
-    precision highp float;
-    uniform mat4 modelViewMatrix;
-    uniform mat4 projectionMatrix;
-    attribute vec3 position;
-    attribute vec2 uv;
-
-    varying vec2 vUv;
-
-    void main() {
-        vUv = uv;
-        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+<head>
+  <meta charset="utf-8">
+  <title>Vai girando</title>
+  <style>
+    body {
+      margin: 0;
     }
-  </script>
+  </style>
+</head>
 
-  <script id="fragmentShader" type="x-shader/x-fragment">
-    precision highp float;
-    uniform float time;
-    varying vec2 vUv;
+<!-- Vertex Shader: Responsável pela transformação de vértices na cena -->
+<script id="vertexShader" type="x-shader/x-vertex">
+  precision highp float;
+  uniform mat4 modelViewMatrix;   // Matriz que transforma do espaço do objeto para o espaço da câmera
+  uniform mat4 projectionMatrix;  // Matriz de projeção da câmera
+  attribute vec3 position;        // A posição do vértice no espaço do objeto
+  attribute vec2 uv;              // As coordenadas de textura do vértice
 
-    void main() {
-        float dist = length(vUv - 0.5);
+  varying vec2 vUv;               // Coordenadas de textura a serem passadas ao fragment shader
 
-        float angle = atan(vUv.y - 0.9) + time;
+  void main() {
+      vUv = uv;                   // Passa as coordenadas de textura para o fragment shader
+      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+      // Calcula a posição final do vértice multiplicando as matrizes de projeção e modelview
+  }
+</script>
 
-        vec3 color = vec3(
-            0.1 + 0.9 * sin(angle),   // Vermelho
-            0.4 + 0.1 * sin(angle + 15.0), // Verde
-            0.9 + 0.1 * sin(angle + 125.0)  // Azul
-        );
+<!-- Fragment Shader: Define a cor de cada pixel -->
+<script id="fragmentShader" type="x-shader/x-fragment">
+  precision highp float;
+  uniform float time;            // Tempo usado para criar animações
+  varying vec2 vUv;              // Coordenadas de textura recebidas do vertex shader
 
-        gl_FragColor = vec4(color, 1.0);
-    }
-  </script>
+  void main() {
+      float dist = length(vUv - 0.5);  // Distância do ponto atual ao centro do retângulo de textura
 
-  <body>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="main.js"></script>
-  </body>
+      // Calcula um ângulo baseado na posição do ponto atual
+      float angle = atan(vUv.y - 0.9) + time;
+
+      // Calcula a cor do pixel com base no ângulo calculado
+      vec3 color = vec3(
+          0.1 + 0.9 * sin(angle),           // Vermelho
+          0.4 + 0.1 * sin(angle + 15.0),    // Verde
+          0.9 + 0.1 * sin(angle + 125.0)    // Azul
+      );
+
+      gl_FragColor = vec4(color, 1.0);     // Define a cor final do pixel
+  }
+</script>
+
+<body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="main.js"></script> <!-- Inclui o arquivo JavaScript principal -->
+</body>
 </html>
