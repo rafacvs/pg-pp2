@@ -57,7 +57,21 @@ const cilinderMaterial = new THREE.RawShaderMaterial({
 const cilinder = new THREE.Mesh(cilinderGeometry, cilinderMaterial);
 scene.add(cilinder);
 
+
+const bananaGeometry = new THREE.TorusBufferGeometry(
+  0.5,
+  0.2,
+  16,
+  100,
+  Math.PI
+);
+const bananaTexture = loader.load("./images/banana.jpg");
+const bananaMaterial = new THREE.MeshBasicMaterial({ map: bananaTexture });
+const banana = new THREE.Mesh(bananaGeometry, bananaMaterial);
+scene.add(banana);
+
 // animate variables
+let time = 0;
 let scaleDirection = 1;
 let scaleRotation = 1;
 let showAnimation = true;
@@ -78,6 +92,15 @@ function animate() {
     if (cilinder.rotation.z >= 0.8 || cilinder.rotation.z <= -0.8)
       scaleRotation *= -1;
   }
+
+  banana.position.x = Math.sin(time) * 4;
+  banana.position.y = Math.sin(time) * 1.8 - 1.5;
+  banana.position.z = Math.sin(time) * 3 - 3;
+  banana.rotation.z += 0.01;
+  banana.rotation.x += 0.05;
+  banana.rotation.y += 0.01;
+
+  time += 0.01; 
 
   renderer.render(scene, currentCamera);
 }
